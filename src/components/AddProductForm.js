@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function AddProductForm({ onAdd }) {
-  // Controlled form state — one object for all fields
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -9,32 +8,28 @@ function AddProductForm({ onAdd }) {
     stock: '',
   });
 
-  // Update the right field when user types
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   function handleSubmit(e) {
-    e.preventDefault(); // stop page reload
+    e.preventDefault();
 
-    // Basic validation
     if (!formData.name || !formData.category || !formData.price || !formData.stock) {
       alert('Please fill in all fields!');
       return;
     }
 
-    // Build the new product object
     const newProduct = {
-      id: Date.now(),                    // simple unique id
+      id: Date.now(),
       name: formData.name,
       category: formData.category,
       price: parseFloat(formData.price),
       stock: parseInt(formData.stock),
     };
 
-    onAdd(newProduct); // send it up to App
+    onAdd(newProduct);
 
-    // Reset the form
     setFormData({ name: '', category: '', price: '', stock: '' });
   }
 
