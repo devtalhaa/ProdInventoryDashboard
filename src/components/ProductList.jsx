@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from './ProductCard';
+import ProductCard from './ProductCard.jsx';
 
 function ProductList({ products, onDelete }) {
   if (products.length === 0) {

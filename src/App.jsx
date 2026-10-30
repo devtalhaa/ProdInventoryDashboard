@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Navbar from './components/Navbar';
-import SearchBar from './components/SearchBar';
-import AddProductForm from './components/AddProductForm';
-import ProductList from './components/ProductList';
+import Navbar from './components/Navbar.jsx';
+import SearchBar from './components/SearchBar.jsx';
+import AddProductForm from './components/AddProductForm.jsx';
+import ProductList from './components/ProductList.jsx';
 import './App.css';
 
 const initialProducts = [
