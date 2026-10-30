@@ -1,122 +1,57 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Navbar from './components/Navbar';
+import SearchBar from './components/SearchBar';
+import AddProductForm from './components/AddProductForm';
+import ProductList from './components/ProductList';
+import './App.css';
+
+// ── Initial dummy products ──────────────────────────────────────────────────
+const initialProducts = [
+  { id: 1, name: 'Wireless Mouse',      category: 'Electronics', price: 25.99, stock: 50 },
+  { id: 2, name: 'Notebook (A4)',        category: 'Stationery',  price: 3.49,  stock: 200 },
+  { id: 3, name: 'USB-C Hub',            category: 'Electronics', price: 49.99, stock: 30 },
+  { id: 4, name: 'Coffee Mug',           category: 'Kitchen',     price: 12.00, stock: 75 },
+  { id: 5, name: 'Mechanical Keyboard', category: 'Electronics', price: 89.99, stock: 20 },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  // ── State ──────────────────────────────────────────────────────────────────
+  const [products, setProducts]       = useState(initialProducts);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // ── Add a new product ──────────────────────────────────────────────────────
+  function handleAddProduct(newProduct) {
+    setProducts([...products, newProduct]);
+  }
+
+  // ── Delete a product by id ─────────────────────────────────────────────────
+  function handleDeleteProduct(id) {
+    setProducts(products.filter((p) => p.id !== id));
+  }
+
+  // ── Live search filter (name OR category, case-insensitive) ───────────────
+  const filteredProducts = products.filter((p) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      p.name.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query)
+    );
+  });
+
+  // ── Summary numbers for the Navbar ────────────────────────────────────────
+  const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div>
+      <Navbar totalProducts={products.length} totalStock={totalStock} />
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <div className="container">
+        <AddProductForm onAdd={handleAddProduct} />
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <ProductList products={filteredProducts} onDelete={handleDeleteProduct} />
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
