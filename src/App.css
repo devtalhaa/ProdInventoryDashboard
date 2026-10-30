@@ -155,3 +155,71 @@ body {
 .delete-btn:hover {
   background-color: #c0392b;
 }
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.dialog-box {
+  background: white;
+  border-radius: 10px;
+  padding: 28px 32px;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.dialog-message {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.dialog-btn {
+  padding: 9px 22px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dialog-btn.ok {
+  background-color: #2980b9;
+  color: white;
+}
+
+.dialog-btn.ok:hover {
+  background-color: #2471a3;
+}
+
+.dialog-btn.cancel {
+  background-color: #bdc3c7;
+  color: #333;
+}
+
+.dialog-btn.cancel:hover {
+  background-color: #a8b0b5;
+}
+
+.dialog-btn.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.dialog-btn.delete:hover {
+  background-color: #c0392b;
+}

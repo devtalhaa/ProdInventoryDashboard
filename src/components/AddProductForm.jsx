@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Dialog from './Dialog.jsx';
 
 function AddProductForm({ onAdd }) {
   const [formData, setFormData] = useState({
@@ -8,6 +9,8 @@ function AddProductForm({ onAdd }) {
     stock: '',
   });
 
+  const [dialog, setDialog] = useState({ isOpen: false, message: '' });
+
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -16,7 +19,7 @@ function AddProductForm({ onAdd }) {
     e.preventDefault();
 
     if (!formData.name || !formData.category || !formData.price || !formData.stock) {
-      alert('Please fill in all fields!');
+      setDialog({ isOpen: true, message: 'Please fill in all fields!' });
       return;
     }
 
@@ -29,7 +32,6 @@ function AddProductForm({ onAdd }) {
     };
 
     onAdd(newProduct);
-
     setFormData({ name: '', category: '', price: '', stock: '' });
   }
 
@@ -70,6 +72,13 @@ function AddProductForm({ onAdd }) {
         />
         <button type="submit">➕ Add Product</button>
       </form>
+
+      <Dialog
+        isOpen={dialog.isOpen}
+        message={dialog.message}
+        type="alert"
+        onClose={() => setDialog({ isOpen: false, message: '' })}
+      />
     </div>
   );
 }
